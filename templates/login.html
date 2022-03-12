@@ -1,0 +1,22 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div id="loginCard" class="col col-sm-12 col-md-8 col-lg-6 mx-lg-auto">
+      <p>Login via Gmail</p>
+      <form action="{{url_for('userlogin')}}" id="loginForm" method="GET">
+        <button
+          class="btn btn-lg btn-google btn-block text-uppercase btn-outline"
+        >
+          <img 
+            src="https://img.icons8.com/color/16/000000/google-logo.png" 
+            width="24"
+            height="24"
+          />
+          Gmail
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

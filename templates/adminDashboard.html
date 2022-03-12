@@ -1,0 +1,157 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {%for word in json_words%}
+            <div class="container">
+                <div class="row">
+                    <div id="card" class="col col-md-8 col-lg-6">                            
+                            <div class="row">
+                                <div class="col">
+                                    <div id="word">
+                                        <p>
+                                            Word: {{word['word']}}
+                                        </p>
+                                    </div>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="language">
+                                        <p>
+                                           Language : {{ word['language']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="pspeech">
+                                        <p>
+                                            Part of speech: {{word['partofspeech']}}
+                                        </p>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="gender">
+                                        <p>
+                                            Gender: {{word['gender']}}
+                                        </p>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="conjugates">
+                                        <p>
+                                            Conjugates: {{word['conjugates']}}
+                                        </p>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="definition">
+                                        <p>
+                                           Defination: {{ word['definition']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="exp">
+                                        <p>
+                                         Example:   {{ word['exp']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="synonyms">
+                                        <p>
+                                            Synonyms:   {{ word['synonyms']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="antonyms">
+                                        <p>
+                                            Antonyms:  {{ word['antonyms']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="region">
+                                        <p>
+                                            Region primarly used in:  {{ word['region']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="zipcode">
+                                        <p>
+                                            zipcode:   {{ word['zipcode']}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="definition">
+                                    <p>
+                                        {{ word['definition']}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="exp">
+                                    <p>
+                                        {{ word['exp']}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="upvote">
+                                    <p>
+                                        Handle : {{word['userHandle']}}
+                                    </p>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="upvote">
+                                    <p>
+                                        Email : {{word['email']}}
+                                    </p>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="row">
+                            {% set wordID= word['_id']['$oid'] %}
+                             <div class="col">
+                                    <form action="{{url_for('approve_word',action='approve', word_id=wordID )}}" method="POST">
+                                    <button class="btn btn-success" type="submit">Approve</button>
+                                </form> 
+                        </div>
+                            <div class="col">
+                                    <form action="{{url_for('approve_word',action='decline', word_id=wordID )}}" method="POST">
+                                    <button class="btn btn-danger" type="submit">Decline</button>
+                                </form> 
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    {% endfor %}
+    {% endblock content %}

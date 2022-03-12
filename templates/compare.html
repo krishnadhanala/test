@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&family=Rubik&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,600;1,200&family=Ubuntu&family=Zen+Kurenaido&family=Zen+Old+Mincho:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="static/styles/logo/favicon.ico" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='styles/bootstrap.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='styles/home.css') }}"
+    />
+    <title>Desi Dictionary</title>
+    <script
+      src="https://kit.fontawesome.com/151f99639a.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .respnsive-form input, .respnsive-form button{
+        height: 40px;
+      }
+
+      @media screen and (max-width: 768px) {
+          .respnsive-form input, .respnsive-form button {
+            height: 36px;
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg fixed-top" id="nav">
+        <div class="container d-block">
+          <div class="w-100 d-flex justify-content-start">
+            <a class="navbar-brand" href="/"> Desi Dictionary </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarColor01"
+              aria-controls="navbarColor01"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div class="w-100 d-flex align-items-center">
+            <form class="d-flex flex-grow-1 respnsive-form" method="get" action="/search">
+              <input
+                class="form-control me-sm-1 flex-grow-1"
+                type="text"
+                name="search"
+                placeholder="Search by word..."
+              />
+              <button class="btn btn-secondary" type="submit">Search</button>
+            </form>
+            <div class="d-flex align-items-center gap-2" id="navbarColor01">
+              <a class="nav-link active" href="/addword">
+                <div class="row">
+                  <div class="col">
+                    <i class="fa-solid fa-circle-plus nav-icon"></i>
+                  </div>
+                </div>
+                <div class="row d-none d-md-block">
+                  <div class="col">Add Wordss</div>
+                </div>
+                <span class="visually-hidden">(current)</span>
+              </a>
+              {% if not session.get('google_id')%}
+              <a class="nav-link active" href="/user">
+                <div class="row">
+                  <div class="col">
+                    <i class="fa-solid fa-user nav-icon"></i>
+                  </div>
+                </div>
+                <div class="row d-none d-md-block">
+                  <div class="col">Sign in</div>
+                </div>
+                <span class="visually-hidden">(current)</span>
+              </a>
+              {%else%}
+              <a class="nav-link active" href="/user/logout">
+                <div class="row">
+                  <div class="col">
+                    <img src="{{session['picture']}}" class="nav-icon" alt="" id="profilepic" style="min-width: 38.4px" />
+                  </div>
+                </div>
+                <div class="row d-none d-md-block">
+                  <div class="col">Logout</div>
+                </div>
+                <span class="visually-hidden">(current)</span>
+              </a>
+              {% if session.get('email') in ["tschartalerts@gmail.com"]%}
+                <a class="nav-link active" href="/adminDashboard">
+                  <div class="row">
+                    <div class="col">
+                      <i class="fa-solid fa-user nav-icon"></i>
+                    </div>
+                  </div>
+                  <div class="row d-none d-md-block">
+                    <div class="col">Admin</div>
+                  </div>
+                  <span class="visually-hidden">(current)</span>
+                </a>
+              {%endif%}
+              {%endif%}
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="row">
+        <div class="col-12 col-sm-8">
+          {% with messages = get_flashed_messages() %} {% if messages %}
+          <ul class="flashes" id="loginFlash">
+            {% for message in messages %}
+            <div class="alert alert-dismissible alert-success">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                style="color: green"
+              ></button>
+              <strong>
+                <li>{{ message }}</li>
+              </strong>
+            </div>
+            {% endfor %}
+          </ul>
+          {% endif %} {% endwith %}
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div id="mainPage">{% block content %} {% endblock content %}</div>
+  </body>
+</html>

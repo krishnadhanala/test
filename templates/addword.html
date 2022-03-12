@@ -1,0 +1,184 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="container">
+  {% if not session.get('name')%}
+  <div style="margin-top: 5rem">
+    <h3>Please Login to submit word</h3>
+    <form action="{{url_for('search')}}" method="GET" style="margin-top: 5rem">
+      <button class="form-control-label">Login</button>
+    </form>
+  </div>
+  {% endif %} {% if session['name']%}
+  <div style="margin-top: 5rem">
+    <h3>Logged in as {{session['name']}}</h3>
+  </div>
+  {% endif %}
+
+  <div style="margin-top: 2rem">
+    <form action="/postword" method="POST">
+      <div class="form-group mb-4">
+        <label for="language">Language:</label>
+        <select
+          name="language"
+          id="language"
+          class="form-control-label form-control col-sm-6"
+        >
+          <option value="Bengali">Bengali</option>
+          <option value="Bhojpuri">Bhojpuri</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Kannada">Kannada</option>
+          <option value="Konkani">Konkani</option>
+          <option value="Malayalam">Malayalam</option>
+          <option value="Marathi">Marathi</option>
+          <option value="Nepali">Nepali</option>
+          <option value="Odiya">Odiya</option>
+          <option value="Pahadi">Pahadi</option>
+          <option value="Punjabi">Punjabi</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Urdu">Urdu</option>
+        </select>
+      </div>
+      <div class="form-group mb-4">
+        <label for="word">Word:</label>
+        <input
+          type="text"
+          class="form-control-label form-control col-sm-6"
+          style="border-radius: 12px"
+          id="word"
+          name="word"
+          required
+        />
+      </div>
+      <div class="form-group mb-4">
+        <label for="part_of_speech">Part of Speech:</label
+        >
+        <select
+          name="part_of_speech"
+          id="part_of_speech"
+          onchange="changespeech()"
+          class="form-control-label form-control col-sm-6"
+        >
+          <option value=""></option>
+          <option value="noun">Noun</option>
+          <option value="pnoun">Pronoun</option>
+          <option value="verb">Verb</option>
+          <option value="adverb">Adverb</option>
+          <option value="adjective">Adjective</option>
+          <option value="conjunction">Conjunction</option>
+          <option value="preposition">Preposition</option>
+          <option value="interjection">Interjection</option>
+        </select>
+      </div>
+      <div class="form-group mb-4" id="gender_field">
+        <label for="gender">Gender:</label>
+        <select
+          name="gender"
+          id="gender"
+          class="form-control-label form-control col-sm-6"
+        >
+        <option value=""></option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="neutral">Gender Neutral</option>
+        </select>
+      </div>
+      <div class="form-group mb-4">
+        <label for="conjugates">Conjugates</label>
+        <input
+          type="text"
+          class="form-control-label form-control col-sm-6"
+          style="border-radius: 12px"
+          id="conjugates"
+          name="conjugates"
+        />
+      </div>
+      <div class="form-group mb-4">
+        <label for="region">Region primarly used in</label>
+        <input
+          type="text"
+          class="form-control-label form-control col-sm-6"
+          style="border-radius: 12px"
+          id="region"
+          name="region"
+        />
+      </div>
+      <div class="form-group mb-4">
+        <label for="def">Definition: </label>
+        <textarea
+          type="text"
+          id="def"
+          class="form-control-label form-control col-sm-6"
+          name="def"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group mb-4">
+        <label for="usage_example">Usage Example</label>
+        <input
+          type="text"
+          class="form-control-label form-control col-sm-6"
+          style="border-radius: 12px"
+          id="usage_example"
+          name="usage_example"
+        />
+      </div>
+      <div class="form-group mb-4">
+        <label for="synonyms">Synonyms</label>
+        <input
+          type="text"
+          class="form-control-label form-control col-sm-6"
+          style="border-radius: 12px"
+          id="synonyms"
+          name="synonyms"
+        />
+      </div>
+      <div class="form-group mb-4">
+        <label for="antonyms">Antonyms</label>
+        <input
+          type="text"
+          class="form-control-label form-control col-sm-6"
+          style="border-radius: 12px"
+          id="antonyms"
+          name="antonyms"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="uploaded_zip_code">Uploaded zip code</label
+        >
+        <input
+          type="text"
+          class="form-control-label form-control col-sm-6"
+          style="border-radius: 12px"
+          id="uploaded_zip_code"
+          name="uploaded_zip_code"
+        />
+      </div>
+      <div class="form-group d-flex gap-3 mb-3">
+        <label for="anonCheck">Submit anonymously</label>
+        <input class="col-sm-2 form-check-input" style="border-radius: 12px" type="checkbox" id="anonCheck" name="anonCheck" value="anonTrue">
+      </div>
+
+      <input
+        type="submit"
+        value="submit"
+        class="form-control-label btn btn-primary"
+        onsubmit="myFunction()"
+      />
+    </form>
+  </div>
+  <script>
+    function changespeech() {
+      if(document.getElementById('part_of_speech').value == 'noun' || document.getElementById('part_of_speech').value == 'pnoun') {
+        document.getElementById("gender_field").style.display = "block";
+      } else {
+        document.getElementById("gender_field").style.display = "none";
+      }
+    }
+  </script>
+  <script>
+    function myFunction() {
+    alert("The form was submitted");
+    }
+    </script>
+</div>
+{% endblock content %}
