@@ -43,7 +43,7 @@ def check_group_membership(func):
         
         # Store the groups in a local variable for use in the next decorator
         kwargs['user_groups'] = user_groups
-        return func(*args, user_groups=user_groups, **kwargs)
+        return func(*args, **kwargs)
     
     return wrapper
 
@@ -54,7 +54,7 @@ def check_group_permission(required_permission):
         def wrapper(*args, **kwargs):
             username = kwargs.get('username')
             dataset_name = kwargs.get('dataset_name')
-            user_groups = kwargs.get('user_groups')  # Passed locally from check_group_membership
+            user_groups = kwargs.pop('user_groups', [])  # Remove from kwargs to avoid conflicts
 
             # Check if any of the user's groups have the required permission for this dataset
             for group in user_groups:
@@ -70,17 +70,17 @@ def check_group_permission(required_permission):
 
 @check_group_membership
 @check_group_permission('Write')
-def create_dataset(username, dataset_name, **kwargs):
+def create_dataset(username, dataset_name):
     return f"Dataset '{dataset_name}' created successfully by {username}."
 
 @check_group_membership
 @check_group_permission('Read')
-def view_dataset(username, dataset_name, **kwargs):
+def view_dataset(username, dataset_name):
     return f"Dataset '{dataset_name}' viewed by {username}."
 
 @check_group_membership
 @check_group_permission('Admin')
-def delete_dataset(username, dataset_name, **kwargs):
+def delete_dataset(username, dataset_name):
     return f"Dataset '{dataset_name}' deleted by {username}."
 
 # Simulating mock actions
