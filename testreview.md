@@ -1,0 +1,1 @@
+Successfully upgraded the application to version 2.6, incorporating advanced validation with custom logic. Replaced AWS Glue Data Quality with a custom Lambda solution, achieving superior performance and optimizing data quality validation processes
